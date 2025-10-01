@@ -19,8 +19,6 @@ import {
 } from "@react-three/postprocessing";
 
 export interface Project {
-  lat: number;
-  lon: number;
   label: string;
   summary: string;
   details: string;

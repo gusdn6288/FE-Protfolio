@@ -1,6 +1,6 @@
 import { useState } from "react";
 import type { Project } from "./EarthModel";
-import { FaGithub, FaYoutube, FaExternalLinkAlt } from "react-icons/fa";
+import { FaExternalLinkAlt } from "react-icons/fa";
 
 interface SidePanelProps {
   projects: Project[];
@@ -16,6 +16,25 @@ export default function SidePanel({
   onSelect,
 }: SidePanelProps) {
   const [hovered, setHovered] = useState<Project | null>(null);
+
+  // 플랫폼별 텍스트 색상과 아이콘 매칭
+  const getLinkStyle = (label: string) => {
+    const lowerLabel = label.toLowerCase();
+
+    if (lowerLabel.includes("github")) {
+      return { textColor: "text-[#24292e]", icon: "/icons/GitHub.png" };
+    } else if (lowerLabel.includes("youtube")) {
+      return { textColor: "text-[#ff0000]", icon: "/icons/youtube.png" };
+    } else if (lowerLabel.includes("notion")) {
+      return { textColor: "text-[#000000]", icon: "/icons/notion.png" };
+    } else if (lowerLabel.includes("figma")) {
+      return { textColor: "text-[#a259ff]", icon: "/icons/Figma.png" };
+    } else if (lowerLabel.includes("canva")) {
+      return { textColor: "text-[#00c4cc]", icon: "/icons/canva.jpg" };
+    } else {
+      return { textColor: "text-blue-600", icon: null };
+    }
+  };
 
   return (
     <aside
@@ -87,16 +106,7 @@ export default function SidePanel({
 
                   <div className="mt-4 flex gap-3 flex-wrap">
                     {project.links?.map((link, i) => {
-                      let bgColor = "bg-blue-500 hover:bg-blue-600";
-                      let icon = <FaExternalLinkAlt size={14} />;
-
-                      if (link.label.toLowerCase().includes("github")) {
-                        bgColor = "bg-[#24292e] hover:opacity-90";
-                        icon = <FaGithub size={16} />;
-                      } else if (link.label.toLowerCase().includes("youtube")) {
-                        bgColor = "bg-[#ff0000] hover:opacity-90";
-                        icon = <FaYoutube size={16} />;
-                      }
+                      const { textColor, icon } = getLinkStyle(link.label);
 
                       return (
                         <a
@@ -104,24 +114,38 @@ export default function SidePanel({
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-white text-sm transition ${bgColor}`}
+                          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition bg-white hover:bg-gray-100 border border-gray-300 shadow-sm`}
                         >
-                          {icon}
-                          {link.label}
+                          {icon ? (
+                            <img
+                              src={icon}
+                              alt={link.label}
+                              className="w-full h-4"
+                            />
+                          ) : (
+                            <FaExternalLinkAlt
+                              size={16}
+                              className={textColor}
+                            />
+                          )}
+                          <span className={textColor}>{link.label}</span>
                         </a>
                       );
                     })}
 
-                    {/* ✅ PDF 자세히 보기 버튼 (통일된 디자인) */}
+                    {/* PDF 자세히 보기 버튼 */}
                     {project.pdfUrl && (
                       <a
                         href={project.pdfUrl}
                         target="_blank"
                         rel="noopener noreferrer"
-                        className="flex items-center gap-2 px-3 py-2 rounded-lg bg-blue-500 text-white text-sm hover:bg-blue-600 transition"
+                        className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm bg-white hover:bg-gray-100 border border-gray-300 shadow-sm"
                       >
-                        <FaExternalLinkAlt size={14} />
-                        자세히 보기
+                        <FaExternalLinkAlt
+                          size={14}
+                          className="text-blue-600"
+                        />
+                        <span className="text-blue-600">자세히 보기</span>
                       </a>
                     )}
                   </div>

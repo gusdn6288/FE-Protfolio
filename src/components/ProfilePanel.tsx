@@ -1,6 +1,3 @@
-import { FaReact, FaJsSquare, FaFigma } from "react-icons/fa";
-import { SiTypescript, SiTailwindcss } from "react-icons/si";
-import type { ReactNode } from "react";
 interface ProfilePanelProps {
   isOpen: boolean;
   onClose: () => void;
@@ -17,7 +14,7 @@ export default function ProfilePanel({ isOpen, onClose }: ProfilePanelProps) {
     >
       {/* 헤더 (고정) */}
       <div className="flex-shrink-0 p-8 flex justify-between items-start border-b border-gray-200">
-        <h2 className="text-5xl font-light text-gray-300">Profile</h2>
+        <h2 className="text-[30px] font-bold text-gray-900">Profile</h2>
         <button
           onClick={onClose}
           className="text-gray-400 text-2xl hover:text-gray-600 transition"
@@ -111,9 +108,10 @@ export default function ProfilePanel({ isOpen, onClose }: ProfilePanelProps) {
           <hr className="border-gray-200 mb-8" />
 
           {/* 경력 */}
-          <section className="mb-8">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">경력</h3>
-            <div>
+          {/* 교육 */}
+          <section className="mb-6 flex">
+            <h3 className="w-1/3 font-bold text-gray-900">교육</h3>
+            <div className="text-sm">
               <p className="font-semibold text-gray-800">
                 LG유플러스 유레카 2기 프론트엔드 교육(URECA)
               </p>
@@ -124,16 +122,14 @@ export default function ProfilePanel({ isOpen, onClose }: ProfilePanelProps) {
           </section>
 
           {/* 학력 */}
-          <section className="mb-8">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">학력</h3>
-            <div className="flex justify-between gap-6">
-              <div className="flex-1">
-                <p className="font-semibold text-gray-800">대전대학교</p>
-                <p className="text-sm text-gray-600">
-                  2019 - 2023 컴퓨터공학과
-                </p>
+          <section className="mb-6 flex">
+            <h3 className="w-1/3 font-bold text-gray-900">학력</h3>
+            <div className="flex gap-12 text-sm">
+              <div>
+                <p className="font-semibold text-gray-800 ">대전대학교</p>
+                <p className="text-gray-600">2019 - 2023 컴퓨터공학과</p>
               </div>
-              <div className="flex-1">
+              <div>
                 <p className="font-semibold text-gray-800">한국교통대학교</p>
                 <p className="text-sm text-gray-600">
                   2023 - 2025 소프트웨어공학과
@@ -143,40 +139,43 @@ export default function ProfilePanel({ isOpen, onClose }: ProfilePanelProps) {
           </section>
 
           {/* 자격증 */}
-          <section className="mb-8">
-            <h3 className="text-lg font-bold text-gray-900 mb-4">자격증</h3>
-            <div>
+          <section className="mb-6 flex">
+            <h3 className="w-1/3 font-bold text-gray-900">자격증</h3>
+            <div className=" text-sm">
               <p className="font-semibold text-gray-800">정보처리기사</p>
-              <p className="text-sm text-gray-600">2024. 09. 10</p>
+              <p className="text-gray-600">2024. 09. 10</p>
             </div>
           </section>
 
           <hr className="border-gray-200 mb-8" />
 
           {/* Link */}
-          <section className="mb-6">
-            <h3 className="text-lg font-bold text-gray-900 mb-3">Link</h3>
-            <a
-              href="https://github.com/gusdn6288"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-blue-600 hover:underline"
-            >
-              https://github.com/gusdn6288
-            </a>
-          </section>
+          <section className="mb-6 flex gap-6">
+            <div className="w-1/2">
+              <h3 className="text-lg font-bold text-gray-900 mb-3">Link</h3>
+              <a
+                href="https://github.com/gusdn6288"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-blue-600 hover:underline break-all"
+              >
+                https://github.com/gusdn6288
+              </a>
+            </div>
 
-          {/* Portfolio */}
-          <section className="mb-8">
-            <h3 className="text-lg font-bold text-gray-900 mb-3">Portfolio</h3>
-            <a
-              href="https://portfolio-gamma-peach-44.vercel.app/"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="text-sm text-blue-600 hover:underline"
-            >
-              https://portfolio-gamma-peach-44.vercel.app/
-            </a>
+            <div className="w-1/2">
+              <h3 className="text-lg font-bold text-gray-900 mb-3">
+                Portfolio
+              </h3>
+              <a
+                href="https://portfolio-gamma-peach-44.vercel.app/"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-sm text-blue-600 hover:underline break-all"
+              >
+                https://fe-protfolio.vercel.app/
+              </a>
+            </div>
           </section>
         </div>
       </div>
@@ -199,6 +198,11 @@ interface SkillItemProps {
   level: string;
 }
 
+interface SkillItemProps {
+  name: string;
+  level: string;
+}
+
 function SkillItem({ name, level }: SkillItemProps) {
   const levelColors: Record<string, string> = {
     하: "bg-gray-200 text-gray-600",
@@ -206,48 +210,35 @@ function SkillItem({ name, level }: SkillItemProps) {
     상: "bg-blue-600 text-white",
   };
 
-  const icons: Record<string, ReactNode> = {
-    TailwindCSS: <SiTailwindcss className="w-5 h-5 text-cyan-600" />,
-    JavaScript: <FaJsSquare className="w-5 h-5 text-yellow-500" />,
-    React: <FaReact className="w-5 h-5 text-blue-500" />,
-    TypeScript: <SiTypescript className="w-5 h-5 text-blue-600" />,
-    Figma: <FaFigma className="w-5 h-5 text-purple-500" />,
+  // PNG 아이콘 매핑
+  const icons: Record<string, string> = {
+    TailwindCSS: "/icons/tawilwind.png",
+    JavaScript: "/icons/JS.png",
+    React: "/icons/React.png",
+    TypeScript: "/icons/TS.png",
+    Figma: "/icons/Figma.png",
   };
 
   return (
-    <div className="flex items-center justify-between">
-      {/* 왼쪽 아이콘 + 이름 */}
+    <div className="flex items-center justify-between p-2 rounded-md hover:bg-gray-50 transition">
+      {/* 왼쪽: PNG 아이콘 + 이름 */}
       <div className="flex items-center space-x-3">
         <div className="w-8 h-8 flex items-center justify-center">
-          {icons[name] ?? "?"}
+          <img
+            src={icons[name]}
+            alt={name}
+            className="w-6 h-6 object-contain"
+          />
         </div>
         <span className="text-sm font-medium text-gray-800">{name}</span>
       </div>
 
-      {/* 오른쪽 레벨 */}
-      <div className="flex space-x-1">
-        <span
-          className={`px-3 py-1 rounded text-xs font-medium ${
-            level === "하" ? levelColors["하"] : "bg-gray-200 text-gray-600"
-          }`}
-        >
-          하
-        </span>
-        <span
-          className={`px-3 py-1 rounded text-xs font-medium ${
-            level === "중" ? levelColors["중"] : "bg-gray-200 text-gray-600"
-          }`}
-        >
-          중
-        </span>
-        <span
-          className={`px-3 py-1 rounded text-xs font-medium ${
-            level === "상" ? levelColors["상"] : "bg-gray-200 text-gray-600"
-          }`}
-        >
-          상
-        </span>
-      </div>
+      {/* 오른쪽: 레벨 */}
+      <span
+        className={`px-3 py-1 rounded text-xs font-medium ${levelColors[level]}`}
+      >
+        {level}
+      </span>
     </div>
   );
 }
