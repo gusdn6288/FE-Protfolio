@@ -1,4 +1,5 @@
 import { useState } from "react";
+import PanelLayout from "../layouts/PanelLayout";
 import type { Project } from "./EarthModel";
 import { FaExternalLinkAlt } from "react-icons/fa";
 
@@ -17,63 +18,43 @@ export default function SidePanel({
 }: SidePanelProps) {
   const [hovered, setHovered] = useState<Project | null>(null);
 
-  // 플랫폼별 텍스트 색상과 아이콘 매칭
+  // 플랫폼별 스타일 매핑
   const getLinkStyle = (label: string) => {
     const lowerLabel = label.toLowerCase();
-
-    if (lowerLabel.includes("github")) {
+    if (lowerLabel.includes("github"))
       return { textColor: "text-[#24292e]", icon: "/icons/GitHub.png" };
-    } else if (lowerLabel.includes("youtube")) {
+    if (lowerLabel.includes("youtube"))
       return { textColor: "text-[#ff0000]", icon: "/icons/youtube.png" };
-    } else if (lowerLabel.includes("notion")) {
+    if (lowerLabel.includes("notion"))
       return { textColor: "text-[#000000]", icon: "/icons/notion.png" };
-    } else if (lowerLabel.includes("figma")) {
+    if (lowerLabel.includes("figma"))
       return { textColor: "text-[#a259ff]", icon: "/icons/Figma.png" };
-    } else if (lowerLabel.includes("canva")) {
+    if (lowerLabel.includes("canva"))
       return { textColor: "text-[#00c4cc]", icon: "/icons/canva.jpg" };
-    } else {
-      return { textColor: "text-blue-600", icon: null };
-    }
+    return { textColor: "text-blue-600", icon: null };
   };
 
   return (
-    <aside
-      className={`fixed top-0 right-0 h-screen w-[700px] 
-      bg-white via-indigo-100 to-blue-200
-      shadow-2xl border-l border-indigo-300
-      z-50 transform transition-transform duration-500 ease-in-out
-      flex flex-col ${selected ? "translate-x-0" : "translate-x-full"}`}
-    >
-      {/* 헤더 */}
-      <div className="flex-shrink-0 p-6 flex justify-between items-start">
-        <h2 className="text-[30px] font-bold text-gray-900">Project</h2>
-        <button
-          onClick={onClose}
-          className="text-gray-400 text-2xl cursor-pointer hover:text-gray-600 transition"
-        >
-          ✕
-        </button>
-      </div>
-
-      {/* 프로젝트 리스트 */}
-      <div className="flex-1 overflow-y-auto px-6 pb-6 scrollbar-hide">
-        {projects.map((project, index) => {
+    <PanelLayout title="Project" isOpen={!!selected} onClose={onClose}>
+      <div className="px-6 pb-6">
+        {projects.map((project) => {
           const isActive =
             selected?.label === project.label ||
             hovered?.label === project.label;
 
           return (
             <div
-              key={index}
+              key={project.label}
               onClick={() => onSelect(project)}
               onMouseEnter={() => setHovered(project)}
               onMouseLeave={() => setHovered(null)}
               className={`relative p-5 mb-3 rounded-xl cursor-pointer transition-all duration-400 ${
                 isActive
                   ? "bg-blue-50 border-2 border-blue-500 shadow-md"
-                  : " border-2 border-blue-500/40 "
+                  : "border-2 border-blue-500/40"
               }`}
             >
+              {/* 프로젝트 제목 */}
               <h3
                 className={`font-bold text-lg mb-2 ${
                   isActive ? "text-blue-700" : "text-gray-900"
@@ -82,7 +63,7 @@ export default function SidePanel({
                 {project.label}
               </h3>
 
-              <p className="text-sm text-gray-600 mb-2">{project.summary}</p>
+              <p className="text-sm text-gray-600 mb-2 ">{project.summary}</p>
 
               {/* 상세 영역 */}
               <div
@@ -100,27 +81,28 @@ export default function SidePanel({
                     />
                   )}
 
+                  {/* 상세 설명 */}
                   <p className="text-sm text-gray-700 leading-relaxed whitespace-pre-line">
                     {project.details}
                   </p>
 
+                  {/* 링크들 */}
                   <div className="mt-4 flex gap-3 flex-wrap">
-                    {project.links?.map((link, i) => {
+                    {project.links?.map((link) => {
                       const { textColor, icon } = getLinkStyle(link.label);
-
                       return (
                         <a
-                          key={i}
+                          key={link.url}
                           href={link.url}
                           target="_blank"
                           rel="noopener noreferrer"
-                          className={`flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition bg-white hover:bg-gray-100 border border-gray-300 shadow-sm`}
+                          className="flex items-center gap-2 px-3 py-2 rounded-lg text-sm transition bg-white hover:bg-gray-100 border border-gray-300 shadow-sm"
                         >
                           {icon ? (
                             <img
                               src={icon}
                               alt={link.label}
-                              className="w-full h-4"
+                              className="w-4 h-4 object-contain"
                             />
                           ) : (
                             <FaExternalLinkAlt
@@ -133,7 +115,7 @@ export default function SidePanel({
                       );
                     })}
 
-                    {/* PDF 자세히 보기 버튼 */}
+                    {/* PDF 버튼 */}
                     {project.pdfUrl && (
                       <a
                         href={project.pdfUrl}
@@ -152,6 +134,7 @@ export default function SidePanel({
                 </div>
               </div>
 
+              {/* 활성화 표시점 */}
               {isActive && (
                 <div className="absolute top-5 right-5 w-3 h-3 bg-blue-500 rounded-full"></div>
               )}
@@ -159,16 +142,6 @@ export default function SidePanel({
           );
         })}
       </div>
-
-      <style>{`
-        .scrollbar-hide {
-          -ms-overflow-style: none;
-          scrollbar-width: none;
-        }
-        .scrollbar-hide::-webkit-scrollbar {
-          display: none;
-        }
-      `}</style>
-    </aside>
+    </PanelLayout>
   );
 }

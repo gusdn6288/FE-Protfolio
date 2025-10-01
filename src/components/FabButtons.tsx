@@ -26,7 +26,7 @@ export default function FabButtons() {
           {/* Message → 채팅 모달 열기 */}
           <button
             onClick={() => setShowChatModal(true)}
-            className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-gray-200 animate-slideUp"
+            className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-gray-200 animate-slideUp cursor-pointer"
           >
             <img src="/icons/message.png" alt="Message" className="w-6 h-6" />
           </button>
@@ -34,7 +34,7 @@ export default function FabButtons() {
           {/* Email → 이메일 모달 */}
           <button
             onClick={() => setShowEmailModal(true)}
-            className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-gray-200 animate-slideUp"
+            className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-gray-200 animate-slideUp cursor-pointer"
           >
             <img src="/icons/email.png" alt="Email" className="w-6 h-6" />
           </button>
@@ -44,7 +44,7 @@ export default function FabButtons() {
             href="https://github.com/gusdn6288"
             target="_blank"
             rel="noopener noreferrer"
-            className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-gray-200 animate-slideUp"
+            className="w-14 h-14 rounded-full bg-white flex items-center justify-center shadow-lg hover:bg-gray-200 animate-slideUp cursor-pointer"
           >
             <img src="/icons/GitHub.png" alt="GitHub" className="w-6 h-6" />
           </a>
@@ -54,7 +54,7 @@ export default function FabButtons() {
       {/* 메인 FAB */}
       <button
         onClick={() => setOpen(!open)}
-        className="w-14 h-14 rounded-full bg-white text-black text-2xl flex items-center justify-center shadow-xl hover:bg-gray-200 transition-transform"
+        className="w-14 h-14 rounded-full bg-white text-black text-2xl flex items-center justify-center shadow-xl hover:bg-gray-200 transition-transform cursor-pointer"
       >
         {open ? "×" : "≡"}
       </button>
