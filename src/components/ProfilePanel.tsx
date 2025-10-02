@@ -34,25 +34,28 @@ export default function ProfilePanel({ isOpen, onClose }: ProfilePanelProps) {
         {/* 소개 */}
         <section className="mb-8">
           <p className="text-gray-800 leading-relaxed mb-3">
-            <strong>
-              “여기까지는 누구나 한다, 지금부터 시작이다.” 저는 개발에 어려움이
-              생기거나 힘들 때마다 이 말을 마음에 새기며 한 걸음 더 나아가고
-              있습니다.
-            </strong>
+            <strong>과정에서 배우고, 과정에서 성장</strong>
           </p>
           <p className="text-sm text-gray-700 leading-relaxed mb-2">
-            저는 성장을 위해 꾸준히 블로그 작성으로 학습 내용을 기록하고
-            있습니다. 또한 코딩테스트 문제를 풀며 문제 해결 능력을 키우고, 예전
-            프로젝트 팀원들과의 스터디를 통해 새로운 기술을 함께 학습하고
-            피드백을 나누고 있습니다. 이러한 습관을 통해 지속적으로 학습하고
-            성장하는 개발자가 되기 위해 노력하고 있습니다.
+            개발을 통해 단순히 결과를 만드는 것에 그치지 않고, 과정 속에서
+            배우고 성장하는 경험을 가장 큰 가치로 생각합니다. 새로운 시도와
+            시행착오 속에서 얻은 배움이 곧 저를 더 나은 개발자로 이끌어간다고
+            믿습니다. 비록 과정이 쉽지 않더라도, 그 길을 끝까지 걸어가는 힘이
+            결국 저를 성장시킨다고 생각합니다.
+          </p>
+
+          <p className="text-gray-800 leading-relaxed mb-3">
+            <strong>함께 만드는 가치</strong>
           </p>
           <p className="text-sm text-gray-700 leading-relaxed">
-            주어진 일을 가치고 끝까지 책임지는 개발자가 되기 위해 꾸준히 배우고
-            만들어가고 있습니다.
+            프로젝트를 진행하면서 깨달은 것은 혼자 잘하는 것보다 함께 잘하는
+            것이 더 큰 성과를 만든다는 점입니다. 때로는 개인의 역량이
+            부족하더라도 신뢰와 소통이 된다면 더 큰 시너지를 낼 수 있습니다.
+            저는 ‘함께 성장하는 경험’이야말로 개발의 가장 큰 가치라 믿고, 이를
+            실천하는 팀원이 되고자 합니다.
           </p>
         </section>
-
+        <hr className="border-gray-200 mb-8" />
         {/* 희망 직무 */}
         <section className="mb-8">
           <div className="flex justify-between items-center mb-4">

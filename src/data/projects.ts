@@ -76,7 +76,9 @@ export const projects: Project[] = [
     summary: "React-vite 기반 웹사이트",
     details: "이전 React로 만든 개인 포트폴리오 웹사이트입니다.",
     image: "/images/portfolio.PNG",
-    links: [{ label: "GitHub", url: "https://github.com/gusdn6288/portfolio" }],
-    pdfUrl: "https://portfolio-khw.vercel.app/",
+    links: [
+      { label: "GitHub", url: "https://github.com/gusdn6288/portfolio" },
+      { label: "이동하기", url: "https://portfolio-khw.vercel.app/" },
+    ],
   },
 ];
