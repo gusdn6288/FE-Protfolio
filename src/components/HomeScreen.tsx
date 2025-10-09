@@ -130,10 +130,10 @@ export default function HomeScreen() {
                 transition={
                   isSelected ? { duration: 0.18, ease: "easeOut" } : undefined
                 }
-                className="w-36 h-36 rounded-2xl border border-white/20 bg-white/10
+                className="w-36 h-36 rounded-2xl border border-white/20 bg-black/70
                    flex flex-col items-center justify-center
                    will-change-transform will-change-opacity
-                   hover:bg-white/20 transition-colors"
+                   hover:bg-black/50 transition-colors"
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -151,7 +151,7 @@ export default function HomeScreen() {
 
         {/* 🔹 하단: 연락 패널도 첫 등장 애니메이션 */}
         <motion.div
-          className="w-[80%] h-30 rounded-3xl border border-white/20 bg-white/10 backdrop-blur-md
+          className="w-[60%] h-30 rounded-3xl border border-white/20 bg-black/70 backdrop-blur-md
                      flex items-center justify-around px-2"
           variants={dockVariants}
           initial="hidden"
@@ -173,7 +173,11 @@ export default function HomeScreen() {
               icon: "/icons/GitHub.png",
               link: "https://github.com/gusdn6288",
             },
-            { name: "Resume", icon: "/icons/resume.png", link: "/resume.pdf" },
+            {
+              name: "Resume",
+              icon: "/icons/user.png",
+              link: "/pdfs/Profile.pdf",
+            },
           ].map((app) =>
             app.link ? (
               <motion.a

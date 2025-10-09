@@ -32,11 +32,14 @@ export default function Screen({
   return (
     <Canvas
       shadows
+      dpr={Math.min(window.devicePixelRatio, 2)}
+      ㄴ
       camera={{ position: [0, 0, 5], fov: 10 }}
       gl={{
         preserveDrawingBuffer: true,
         antialias: true,
         alpha: true,
+        powerPreference: "high-performance",
       }}
     >
       <color attach="background" args={["#000000"]} />
