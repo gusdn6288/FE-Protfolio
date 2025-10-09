@@ -31,7 +31,7 @@ export default function ProjectModal({
 
   if (!isAnimating || !buttonRect) return null;
 
-  // ✅ label을 기반으로 아이콘 경로 매핑
+  //
   const getIconPath = (label: string): string => {
     const name = label.toLowerCase();
     if (name.includes("github")) return "/icons/GitHub.png";
