@@ -33,7 +33,6 @@ export default function Screen({
     <Canvas
       shadows
       dpr={Math.min(window.devicePixelRatio, 2)}
-      ㄴ
       camera={{ position: [0, 0, 5], fov: 10 }}
       gl={{
         preserveDrawingBuffer: true,
