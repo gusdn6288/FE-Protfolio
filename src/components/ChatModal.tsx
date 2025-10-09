@@ -119,6 +119,8 @@ export default function ChatModal({ isOpen, onClose, slug }: ChatModalProps) {
       socket.off("chat:newMessage", handleNewMessage);
       socket.off("connect");
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, slug, loadFeedbacks]);
 
   useEffect(() => {

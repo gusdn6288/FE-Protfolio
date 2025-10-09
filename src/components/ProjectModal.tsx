@@ -1,5 +1,5 @@
 // src/components/ProjectModal.tsx
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import type { projects } from "../data/projects";
 type Project = (typeof projects)[number];
 
