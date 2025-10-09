@@ -31,13 +31,12 @@ export default function ProjectModal({
 
   if (!isAnimating || !buttonRect) return null;
 
-  //
   const getIconPath = (label: string): string => {
     const name = label.toLowerCase();
     if (name.includes("github")) return "/icons/GitHub.png";
     if (name.includes("youtube")) return "/icons/youtube.png";
     if (name.includes("notion")) return "/icons/notion.png";
-    if (name.includes("figma")) return "/icons/figma.png";
+    if (name.includes("figma")) return "/icons/Figm.png";
     if (name.includes("canva")) return "/icons/canva.png";
     if (name.includes("pdf")) return "/icons/pdf.png";
     return "/icons/link.png"; // fallback
