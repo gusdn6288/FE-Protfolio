@@ -119,6 +119,8 @@ export default function ChatModal({ isOpen, onClose, slug }: ChatModalProps) {
       socket.off("chat:newMessage", handleNewMessage);
       socket.off("connect");
     };
+
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [isOpen, slug, loadFeedbacks]);
 
   useEffect(() => {
@@ -131,10 +133,13 @@ export default function ChatModal({ isOpen, onClose, slug }: ChatModalProps) {
   if (!isOpen) return null;
 
   return (
-    <div className="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/60 backdrop-blur-md">
-      <div className="relative w-full max-w-lg h-[700px] bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-gray-200">
-        {/* 헤더 */}
-        <div className="relative px-6 py-5 bg-gray-50 border-b border-gray-200">
+    <div className="fixed inset-0 z-10 flex items-center justify-center p-4  ">
+      <div
+        className={`relative bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-gray-200 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
+          isOpen ? "scale-100 opacity-100" : "scale-90 opacity-0"
+        } w-[100%] max-w-[1200px] h-[60%]`}
+      >
+        <div className="relative px-6 py-5  border-b border-gray-200">
           <div className="flex items-center justify-between">
             <div className="flex items-center gap-3">
               <div className="w-10 h-10 rounded-full bg-blue-100 flex items-center justify-center">
