@@ -1,4 +1,70 @@
 @import "tailwindcss";
+
+/* Apple SD 산돌고딕 Neo 로컬 웹폰트 */
+@font-face {
+  font-family: "Apple SD Gothic Neo";
+  src: url("/fonts/AppleSDGothicNeoR.ttf") format("truetype");
+  font-weight: 400;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Apple SD Gothic Neo";
+  src: url("/fonts/AppleSDGothicNeoL.ttf") format("truetype");
+  font-weight: 300;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Apple SD Gothic Neo";
+  src: url("/fonts/AppleSDGothicNeoM.ttf") format("truetype");
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Apple SD Gothic Neo";
+  src: url("/fonts/AppleSDGothicNeoSB.ttf") format("truetype");
+  font-weight: 600;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Apple SD Gothic Neo";
+  src: url("/fonts/AppleSDGothicNeoB.ttf") format("truetype");
+  font-weight: 700;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Apple SD Gothic Neo";
+  src: url("/fonts/AppleSDGothicNeoEB.ttf") format("truetype");
+  font-weight: 800;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Apple SD Gothic Neo";
+  src: url("/fonts/AppleSDGothicNeoH.ttf") format("truetype");
+  font-weight: 900;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Apple SD Gothic Neo";
+  src: url("/fonts/AppleSDGothicNeoUL.ttf") format("truetype");
+  font-weight: 200;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: "Apple SD Gothic Neo";
+  src: url("/fonts/AppleSDGothicNeoT.ttf") format("truetype");
+  font-weight: 100;
+  font-style: normal;
+}
+
+/* 전역 기본 설정 */
 html,
 body,
 #root {
@@ -6,36 +72,9 @@ body,
   height: 100%;
   margin: 0;
   padding: 0;
-  background-color: black; /* 기본 배경 */
-  color: white; /* 기본 텍스트 색 */
-}
 
-@keyframes fadeIn {
-  from {
-    opacity: 0;
-    transform: translateY(-10px);
-  }
-  to {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
-.animate-fadeIn {
-  animation: fadeIn 0.3s ease-out;
-}
-
-@keyframes slideUp {
-  0% {
-    opacity: 0;
-    transform: translateY(20px) scale(0.95);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0) scale(1);
-  }
-}
-
-.animate-slideUp {
-  animation: slideUp 0.3s ease-out forwards;
+  color: white;
+  font-family: -apple-system, BlinkMacSystemFont, "SF Pro Display",
+    "SF Pro Text", "Apple SD Gothic Neo", "Helvetica Neue", "Malgun Gothic",
+    "Segoe UI", Roboto, sans-serif;
 }
