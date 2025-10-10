@@ -96,8 +96,8 @@ export default function LoadingFallback({
         </div>
 
         {/* 안내 텍스트 */}
-        <div className="text-sm text-white/70">
-          {ready ? "클릭(또는 Enter)하여 계속" : "로딩 중…"}
+        <div className="text-bases text-white/70">
+          {ready ? "클릭하여 계속" : "로딩 중…"}
         </div>
       </div>
     </div>

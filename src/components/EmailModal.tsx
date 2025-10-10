@@ -62,7 +62,12 @@ export default function EmailModal({
         to_email: toEmail,
       };
 
-      await emailjs.send(serviceId, templateId, emailParams);
+      await emailjs.send(
+        serviceId,
+        templateId,
+        emailParams,
+        import.meta.env.VITE_EMAILJS_PUBLIC_KEY
+      );
 
       const elapsed = Date.now() - (sendStartRef.current ?? Date.now());
       const wait = Math.max(minSendingMs - elapsed, 0);

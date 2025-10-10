@@ -1,8 +1,10 @@
-import { useGLTF, Html } from "@react-three/drei";
+// src/components/IpadModel.tsx
+import { useGLTF, Html, useVideoTexture } from "@react-three/drei";
 import { useMemo } from "react";
 import * as THREE from "three";
 import LockScreen from "./LockScreen";
 import HomeScreen from "./HomeScreen";
+
 interface IpadModelProps {
   onAppClick?: (appName: string) => void;
 }
@@ -63,47 +65,28 @@ export default function IpadModel({
 
   const { standard, screen } = useMemo(() => getGeometryMesh(nodes), [nodes]);
 
-  const canvasTexture = useMemo(() => {
-    const canvas = document.createElement("canvas");
-    canvas.width = 1024;
-    canvas.height = 1366;
-    const ctx = canvas.getContext("2d");
+  // 🎥 VideoTexture
+  const videoTexture = useVideoTexture("/videos/wallpaper.mp4", {
+    crossOrigin: "anonymous",
+    muted: true,
+    loop: true,
+    autoplay: true,
+    start: powerOn,
+  });
+  videoTexture.flipY = false;
+  videoTexture.colorSpace = THREE.SRGBColorSpace;
+  videoTexture.center.set(0.5, 0.5);
+  videoTexture.rotation = Math.PI / 2;
 
-    if (ctx) {
-      // 💜 기본 그라디언트 배경만 유지
-      const gradient = ctx.createLinearGradient(0, 0, 0, canvas.height);
-      gradient.addColorStop(0, "#667eea");
-      gradient.addColorStop(1, "#764ba2");
-      ctx.fillStyle = gradient;
-      ctx.fillRect(0, 0, canvas.width, canvas.height);
-
-      // 🚫 비눗방울(랜덤 원) 제거됨
-      // ctx.fillStyle = "rgba(255, 255, 255, 0.1)";
-      // for (let i = 0; i < 10; i++) {
-      //   ctx.beginPath();
-      //   ctx.arc(
-      //     Math.random() * canvas.width,
-      //     Math.random() * canvas.height,
-      //     Math.random() * 100 + 50,
-      //     0,
-      //     Math.PI * 2
-      //   );
-      //   ctx.fill();
-      // }
-    }
-
-    const texture = new THREE.CanvasTexture(canvas);
-    texture.colorSpace = THREE.SRGBColorSpace;
-    return texture;
-  }, []);
-
+  // ✅ 가우시안 블러 셰이더 머티리얼
   const blurMaterial = useMemo(() => {
-    if (!canvasTexture) return null;
+    if (!videoTexture) return null;
     return new THREE.ShaderMaterial({
       uniforms: {
-        uTexture: { value: canvasTexture },
-        uBlurAmount: { value: 0.006 },
-        uBrightness: { value: 0.8 },
+        uTexture: { value: videoTexture },
+        uBlurAmount: { value: 0.003 },
+        uBrightness: { value: 0.85 },
+        uRotation: { value: videoTexture.rotation },
       },
       vertexShader: `
         varying vec2 vUv;
@@ -116,33 +99,63 @@ export default function IpadModel({
         uniform sampler2D uTexture;
         uniform float uBlurAmount;
         uniform float uBrightness;
+        uniform float uRotation;
         varying vec2 vUv;
-        
+
+        vec2 rotateUV(vec2 uv, float angle) {
+          uv -= 0.5;
+          float c = cos(angle), s = sin(angle);
+          mat2 m = mat2(c, -s, s, c);
+          uv = m * uv;
+          uv += 0.5;
+          return uv;
+        }
+
+        float gaussian(float x, float sigma) {
+          return exp(-(x * x) / (2.0 * sigma * sigma));
+        }
+
         void main() {
+          vec2 baseUv = rotateUV(vUv, uRotation);
+          
           vec4 color = vec4(0.0);
           float total = 0.0;
-          
-          for (int x = -3; x <= 3; x++) {
-            for (int y = -3; y <= 3; y++) {
-              vec2 offset = vec2(float(x), float(y)) * uBlurAmount;
-              float weight = 1.0 / (1.0 + length(offset) * 10.0);
-              color += texture2D(uTexture, vUv + offset) * weight;
-              total += weight;
+          float sigma = 2.0;
+
+          for (int i = -4; i <= 4; i++) {
+            for (int j = -4; j <= 4; j++) {
+              vec2 offset = vec2(float(i), float(j)) * uBlurAmount;
+              float dist = length(offset);
+              
+              if (dist <= uBlurAmount * 4.5) {
+                vec2 uv = baseUv + offset;
+                float weight = gaussian(dist / uBlurAmount, sigma);
+                color += texture2D(uTexture, uv) * weight;
+                total += weight;
+              }
             }
           }
-          
+
           color /= total;
           color.rgb *= uBrightness;
           gl_FragColor = color;
         }
       `,
+      toneMapped: false,
     });
-  }, [canvasTexture]);
+  }, [videoTexture]);
+
+  // 일반 비디오 머티리얼
+  const videoMaterial = useMemo(() => {
+    const mat = new THREE.MeshBasicMaterial({
+      map: videoTexture,
+      toneMapped: false,
+    });
+    return mat;
+  }, [videoTexture]);
 
   return (
     <group rotation={[0, Math.PI, Math.PI / 2]}>
-      {" "}
-      {/* ✅ 90도 회전 */}
       {standard.map((mesh, index) => (
         <mesh
           key={`${mesh.geometry.uuid}-${index}`}
@@ -152,29 +165,32 @@ export default function IpadModel({
           receiveShadow
         />
       ))}
+
       {screen && (
         <mesh geometry={screen.geometry} castShadow receiveShadow>
           {powerOn ? (
+            // ✅ 잠금 시 블러, 해제 시 원본
             isLocked && blurMaterial ? (
               <primitive object={blurMaterial} attach="material" />
             ) : (
-              <meshBasicMaterial map={canvasTexture} toneMapped={false} />
+              <primitive object={videoMaterial} attach="material" />
             )
           ) : (
             <meshStandardMaterial color="#000" />
           )}
         </mesh>
       )}
-      {/* 🔒 잠금화면 */}
+
+      {/* 🔒 잠금화면 UI */}
       {powerOn && isLocked && (
         <Html
           transform
           occlude
           position={[0, 0, -0.002]}
-          rotation={[0, Math.PI, Math.PI / 2]} // ✅ 회전 동기화
+          rotation={[0, Math.PI, Math.PI / 2]}
           scale={0.3}
           distanceFactor={1}
-          zIndexRange={[0, 0]}
+          zIndexRange={[1, 1]}
           style={{
             width: "1024px",
             height: "1366px",
@@ -185,13 +201,14 @@ export default function IpadModel({
           <LockScreen onUnlock={onUnlock} />
         </Html>
       )}
+
       {/* 🏠 홈화면 */}
       {powerOn && !isLocked && !showModal && onAppClick && (
         <Html
           transform
           occlude
           position={[0, 0, -0.002]}
-          rotation={[0, Math.PI, Math.PI / 2]} // ✅ 동일하게 회전
+          rotation={[0, Math.PI, Math.PI / 2]}
           scale={0.3}
           distanceFactor={1}
           zIndexRange={[0, 0]}

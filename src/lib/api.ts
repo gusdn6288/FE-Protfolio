@@ -14,8 +14,6 @@ export const apiUrl = (path: string): string => {
 };
 
 // 피드백 관련 타입 정의
-// 피드백 관련 타입 정의
-// 피드백 관련 타입 정의
 export interface Feedback {
   _id: string;
   slug: string;

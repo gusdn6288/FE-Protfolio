@@ -54,7 +54,7 @@ export default function ProjectModal({
       <div className="relative flex items-center justify-center w-full h-full pointer-events-none">
         <div
           onClick={(e) => e.stopPropagation()}
-          className="relative bg-black/50 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-2xl pointer-events-auto"
+          className="relative bg-black/90 backdrop-blur-xl border border-white/20 rounded-2xl overflow-hidden transition-all duration-500 ease-[cubic-bezier(0.16,1,0.3,1)] shadow-2xl pointer-events-auto"
           style={
             isOpen
               ? { width: "800px", height: "440px", opacity: 1 }
@@ -94,7 +94,7 @@ export default function ProjectModal({
                 </div>
                 <button
                   onClick={onClose}
-                  className="w-10 h-10 rounded-full bg-white/20 hover:bg-white/30 flex items-center justify-center transition-colors"
+                  className="w-10 h-10 rounded-full bg-black/90 hover:bg-white/30 flex items-center justify-center transition-colors"
                 >
                   <span className="text-2xl">×</span>
                 </button>

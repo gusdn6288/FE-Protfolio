@@ -334,8 +334,9 @@ export default function ChatModal({ isOpen, onClose, slug }: ChatModalProps) {
 
         {/* 입력 영역 */}
         <div className="p-4 bg-white border-t border-gray-200">
-          <div className="flex items-end gap-3">
-            <div className="flex-1 relative">
+          <div className="flex items-center gap-4">
+            {/* 입력창 */}
+            <div className="flex-1 relative flex items-center">
               <textarea
                 value={message}
                 onChange={(e) => setMessage(e.target.value)}
@@ -345,7 +346,7 @@ export default function ChatModal({ isOpen, onClose, slug }: ChatModalProps) {
                     ? "닉네임을 먼저 설정하세요"
                     : "메시지를 입력하세요..."
                 }
-                className="w-full resize-none rounded-2xl bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 px-4 py-3 pr-12 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all max-h-32"
+                className="w-full resize-none rounded-2xl bg-gray-50 border border-gray-300 text-gray-900 placeholder-gray-500 px-4 py-3 pr-12 text-sm focus:outline-none focus:border-blue-500 focus:ring-2 focus:ring-blue-500/20 transition-all max-h-32 align-middle"
                 rows={1}
                 disabled={sending || !nickname.trim()}
               />
@@ -356,10 +357,11 @@ export default function ChatModal({ isOpen, onClose, slug }: ChatModalProps) {
               )}
             </div>
 
+            {/* 전송 버튼 */}
             <button
               onClick={handleSend}
               disabled={!message.trim() || sending || !nickname.trim()}
-              className="h-12 w-12 bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-2xl transition-all flex items-center justify-center shadow-lg hover:shadow-blue-500/50 disabled:shadow-none group disabled:cursor-not-allowed"
+              className="h-12 w-12 flex items-center justify-center bg-blue-600 hover:bg-blue-700 disabled:bg-gray-300 text-white rounded-2xl transition-all shadow-lg hover:shadow-blue-500/50 disabled:shadow-none group disabled:cursor-not-allowed"
             >
               {sending ? (
                 <div className="w-5 h-5 border-2 border-white/30 border-t-white rounded-full animate-spin"></div>

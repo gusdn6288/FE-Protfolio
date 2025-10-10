@@ -1,5 +1,5 @@
 import { useEffect, useRef, useState } from "react";
-
+import StatusBar from "./StatusBar";
 interface LockScreenProps {
   onUnlock?: () => void;
   onSlideStart?: () => void; // (선택)
@@ -72,13 +72,13 @@ export default function LockScreen({
     " " +
     time.toLocaleDateString("ko-KR", { weekday: "long" });
 
-  // ✅ px 단위로 정확히 이동
   const maxPx = Math.max(0, trackWidth - 64);
   const knobX = (slideProgress / 100) * maxPx;
 
   return (
     <div className="relative w-full h-full flex items-center justify-center text-white select-none">
       <div className="w-[90%] h-[55%] flex flex-col items-center justify-between py-10">
+        <StatusBar showTime={false} />
         {/* 시간/날짜 */}
         <div className="flex flex-col items-center">
           <div className="text-[120px] font-extralight leading-none tracking-tight tabular-nums">
@@ -98,7 +98,7 @@ export default function LockScreen({
             tabIndex={0}
             className="
               relative h-20 rounded-full overflow-hidden
-              border border-white/20 bg-white/10 backdrop-blur-md
+              border border-white/20 bg-white/30 backdrop-blur-md
               touch-none select-none cursor-pointer
             "
             onPointerDown={startDrag}
