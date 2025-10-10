@@ -8,7 +8,7 @@ interface LoadingFallbackProps {
 
 export default function LoadingFallback({
   onContinue,
-  minDurationMs = 1000,
+  minDurationMs = 5000,
   logoSrc = "/apple.svg",
 }: LoadingFallbackProps) {
   const [progress, setProgress] = useState(0);

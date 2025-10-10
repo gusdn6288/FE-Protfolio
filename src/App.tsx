@@ -29,7 +29,7 @@ export default function App() {
 
       {!bootDone && (
         <BootScreen
-          durationMs={5000}
+          durationMs={3000}
           logoSrc="/icons/apple.svg"
           onContinue={() => setBootDone(true)}
         />

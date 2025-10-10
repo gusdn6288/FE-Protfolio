@@ -5,6 +5,7 @@ import ChatModal from "./ChatModal";
 import EmailModal from "./EmailModal";
 import { motion } from "motion/react";
 import type { Variants } from "motion/react";
+import StatusBar from "./StatusBar";
 
 export default function HomeScreen() {
   const [selectedProject, setSelectedProject] = useState<number | null>(null);
@@ -113,6 +114,7 @@ export default function HomeScreen() {
       {/* 📱 중앙 컨테이너 */}
       <div className="w-[80%] h-[55%] flex flex-col items-center justify-between py-10">
         {/* 🔹 프로젝트(앱) 아이콘 그리드 — 등장 시 스태거 */}
+        <StatusBar showTime={true} />
         <motion.div
           className="grid grid-cols-4 gap-10"
           variants={gridVariants}
@@ -130,10 +132,10 @@ export default function HomeScreen() {
                 transition={
                   isSelected ? { duration: 0.18, ease: "easeOut" } : undefined
                 }
-                className="w-36 h-36 rounded-2xl border border-white/20 bg-black/70
+                className="w-36 h-36 rounded-2xl border border-white/20 bg-black/50
                    flex flex-col items-center justify-center
                    will-change-transform will-change-opacity
-                   hover:bg-black/50 transition-colors"
+                   hover:bg-black/40 transition-colors"
                 whileHover={{ scale: 1.03, y: -2 }}
                 whileTap={{ scale: 0.97 }}
               >
@@ -151,7 +153,7 @@ export default function HomeScreen() {
 
         {/* 🔹 하단: 연락 패널도 첫 등장 애니메이션 */}
         <motion.div
-          className="w-[60%] h-30 rounded-3xl border border-white/20 bg-black/70 backdrop-blur-md
+          className="w-[60%] h-30 rounded-3xl border border-white/20 bg-black/50 backdrop-blur-md
                      flex items-center justify-around px-2"
           variants={dockVariants}
           initial="hidden"
@@ -240,8 +242,8 @@ export default function HomeScreen() {
       <EmailModal
         isOpen={isEmailOpen}
         onClose={() => setIsEmailOpen(false)}
-        serviceId={import.meta.env.VITE_EMAIL_SERVICE_ID!}
-        templateId={import.meta.env.VITE_EMAIL_TEMPLATE_ID!}
+        serviceId={import.meta.env.VITE_EMAILJS_SERVICE_ID!}
+        templateId={import.meta.env.VITE_EMAILJS_TEMPLATE_ID!}
         toEmail="gusdn-2137@naver.com"
       />
     </div>
