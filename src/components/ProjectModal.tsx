@@ -96,7 +96,9 @@ export default function ProjectModal({
                   onClick={onClose}
                   className="w-10 h-10 rounded-full bg-black/90 hover:bg-white/30 flex items-center justify-center transition-colors"
                 >
-                  <span className="text-2xl">×</span>
+                  <span className="text-2xl leading-none relative top-[1px]">
+                    ×
+                  </span>
                 </button>
               </div>
 
