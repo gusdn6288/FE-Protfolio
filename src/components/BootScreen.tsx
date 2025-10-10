@@ -57,13 +57,15 @@ export default function BootScreen({
       role="dialog"
       aria-modal="true"
     >
-      <div className="flex w-[min(420px,90vw)] flex-col items-center gap-6 text-white select-none">
+      <div className="flex w-[min(420px,90vw)] flex-col items-center gap-2 text-white select-none">
         {logoSrc ? (
           <img src={logoSrc} alt="logo" className="w-30 h-30 mb-8 opacity-90" />
         ) : (
           <div className="text-4xl font-semibold">●</div>
         )}
-
+        <div className="text-sm text-white/70 ">
+          {ready ? "클릭하여 계속" : "로딩중... "}
+        </div>
         {/* 로딩바 */}
         <div className="w-full">
           <div
@@ -78,14 +80,14 @@ export default function BootScreen({
               style={{ width: `${progress}%` }}
             />
           </div>
-          <div className="mt-2 text-xs text-white/70 tabular-nums">
+          <div className="mt-2 text-xs text-white/70 tabular-num">
             {Math.round(progress)}%
           </div>
         </div>
 
-        <div className="text-sm text-white/70">
-          {ready ? "클릭하여 계속" : "로딩 중…"}
-        </div>
+        <p className="pt-12 text-base text-white/70">
+          PC환경에 최적화 되어있습니다.
+        </p>
       </div>
     </div>
   );
