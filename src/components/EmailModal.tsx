@@ -2,6 +2,8 @@ import React, { useRef, useState } from "react";
 import { Mail, X, Send } from "lucide-react";
 import emailjs from "@emailjs/browser";
 import { DotLottieReact } from "@lottiefiles/dotlottie-react";
+import { motion } from "motion/react";
+import { spring } from "motion"; // ✅ 문자열 "spring" 대신 제너레이터 사용
 
 export type EmailModalProps = {
   isOpen: boolean;
@@ -26,7 +28,7 @@ export default function EmailModal({
   toEmail = "gusdn-2137@naver.com",
   onSuccess,
   minSendingMs = 2000, // ✅ 전송 애니메이션 최소 2초
-  successDurationMs = 1900, // ✅ 성공 애니메이션 3.5초 (원하면 3000~4000으로 조정)
+  successDurationMs = 1900, // ✅ 성공 애니메이션 1.9초
 }: EmailModalProps) {
   const [formData, setFormData] = useState({
     name: "",
@@ -37,6 +39,25 @@ export default function EmailModal({
   const [isSending, setIsSending] = useState(false);
   const [phase, setPhase] = useState<Phase>("form");
   const sendStartRef = useRef<number | null>(null);
+
+  // ✅ 아래서 살짝 올라오며(scale) 등장 — 타입 안전 (spring 제너레이터 사용)
+  const SPRING = {
+    type: spring,
+    stiffness: 700,
+    damping: 36,
+    mass: 1,
+  } as const;
+
+  const modalVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.96, filter: "blur(8px)" },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: SPRING,
+    },
+  } as const;
 
   const handleSubmit = async () => {
     if (
@@ -81,7 +102,7 @@ export default function EmailModal({
           onSuccess?.();
           onClose();
           setPhase("form");
-        }, successDurationMs); // ✅ 성공 애니메이션 노출 시간
+        }, successDurationMs);
       }, wait);
     } catch (error) {
       console.error("메일 전송 실패:", error);
@@ -99,7 +120,12 @@ export default function EmailModal({
 
   return (
     <div className="fixed inset-0 z-50 flex items-center justify-center  p-4">
-      <div className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl text-gray-900">
+      <motion.div
+        className="relative w-full max-w-md rounded-2xl bg-white p-6 shadow-2xl text-gray-900"
+        variants={modalVariants}
+        initial="hidden"
+        animate="show"
+      >
         {/* 닫기 버튼: 전송/성공 단계에선 비활성 */}
         {!isSending && phase !== "success" && (
           <button
@@ -264,7 +290,7 @@ export default function EmailModal({
             <p className="text-xs text-gray-500">자동으로 닫혀요</p>
           </div>
         )}
-      </div>
+      </motion.div>
     </div>
   );
 }

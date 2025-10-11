@@ -1,6 +1,8 @@
 import { useState, useEffect, useRef, useCallback } from "react";
 import { io, Socket } from "socket.io-client";
 import { ApiClient, type Feedback } from "../lib/api";
+import { motion } from "motion/react";
+import { spring } from "motion"; // ✅ type: "spring" 대신 제너레이터
 
 interface ChatModalProps {
   isOpen: boolean;
@@ -132,12 +134,33 @@ export default function ChatModal({ isOpen, onClose, slug }: ChatModalProps) {
 
   if (!isOpen) return null;
 
+  // ✅ 아래서 커지며( y:24 → 0, scale:0.96 → 1 ) 등장 — UI/배경 변경 없음
+  const SPRING = {
+    type: spring,
+    stiffness: 700,
+    damping: 36,
+    mass: 1,
+  } as const;
+  const modalVariants = {
+    hidden: { opacity: 0, y: 24, scale: 0.96, filter: "blur(8px)" },
+    show: {
+      opacity: 1,
+      y: 0,
+      scale: 1,
+      filter: "blur(0px)",
+      transition: SPRING,
+    },
+  } as const;
+
   return (
     <div className="fixed inset-0 z-10 flex items-center justify-center p-4  ">
-      <div
+      <motion.div
         className={`relative bg-white rounded-3xl shadow-2xl flex flex-col overflow-hidden border border-gray-200 transition-all duration-300 ease-[cubic-bezier(0.22,1,0.36,1)] ${
           isOpen ? "scale-100 opacity-100" : "scale-90 opacity-0"
         } w-[100%] max-w-[1200px] h-[60%]`}
+        variants={modalVariants}
+        initial="hidden"
+        animate="show"
       >
         <div className="relative px-6 py-5  border-b border-gray-200">
           <div className="flex items-center justify-between">
@@ -377,7 +400,7 @@ export default function ChatModal({ isOpen, onClose, slug }: ChatModalProps) {
             </button>
           </div>
         </div>
-      </div>
+      </motion.div>
 
       <style>{`
         @keyframes slideIn {
