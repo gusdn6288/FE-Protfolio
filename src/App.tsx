@@ -3,7 +3,7 @@ import Screen from "./components/Screen";
 import BootScreen from "./components/BootScreen";
 
 export default function App() {
-  const [bootDone, setBootDone] = useState(false); // ✅ 추가
+  const [bootDone, setBootDone] = useState(false);
   const [isLocked, setIsLocked] = useState(true);
   const [powerOn] = useState(true);
   const [showModal, setShowModal] = useState<string | null>(null);
@@ -16,8 +16,8 @@ export default function App() {
   const handleUnlock = () => setIsLocked(false);
 
   return (
-    <div className="w-screen h-screen bg-gradient-to-br from-gray-900 via-purple-900 to-black flex items-center justify-center relative overflow-hidden">
-      {/* 🎥 3D 화면 */}
+    // ✅ 배경 그라데이션 제거하고 Screen이 전체를 차지하도록
+    <div className="w-screen h-screen relative overflow-hidden">
       <Screen
         powerOn={powerOn}
         isLocked={isLocked}
@@ -25,6 +25,7 @@ export default function App() {
         onAppClick={handleAppClick}
         onCloseModal={handleCloseModal}
         onUnlock={handleUnlock}
+        backgroundUrl="/images/bg.png"
       />
 
       {!bootDone && (
